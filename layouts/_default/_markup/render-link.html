@@ -16,6 +16,7 @@
     {{- if $page }}
       {{- $destination = $page.RelPermalink }}
       {{- if $url.Fragment }}
+        {{- $destination = strings.TrimSuffix "/" $destination }}
         {{- $destination = print $destination "#" $url.Fragment }}
       {{- end }}
     {{- else if fileExists (print .Page.File.Dir .Destination) }}
@@ -23,7 +24,6 @@
     {{- else -}}
       {{- warnf "Page '%s' not found in '%s'" .Destination .Page.File }}
     {{- end }}
-    {{- $destination = print "./" $destination }}
   {{- end }}
   <a href="{{ $destination | safeURL }}"{{ with .Title}} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- end -}}
